@@ -1,0 +1,67 @@
+#
+# Macro file for "amsEcal.cc" 
+# (can be run in batch, without graphic)
+#
+/control/verbose 2
+/run/verbose 2
+#
+#/ams/phys/addPhysics  local
+/testem/phys/addPhysics standard
+/run/setCut 1 mm
+#
+/run/initialize
+#
+/ams/gun/setDefault
+/gun/particle e-
+/gun/energy 2.5 GeV
+#/gun/position -10. -10. .0 cm
+#/ams/gun/beam .01 mm
+#
+/analysis/setFileName mips
+#
+#/control/execute vis.mac
+#
+/analysis/h1/set 1 10000  0. 2500. MeV     #etot in ecal
+/analysis/h1/set 2 10000  0.  2500. MeV     #evis in ecal
+/analysis/h1/set 3 20  0.5 20.5 none
+/analysis/h1/set 4 20  0.5 20.5 none
+/analysis/h1/set 5 6240  0.5 6240.5 none
+/analysis/h1/set 6 512  0.5 512.5 none
+/analysis/h1/set 7 512  0.5 512.5 none
+/analysis/h1/set 8 512  0.5 512.5 none
+/analysis/h1/set 9 512  0.5 512.5 none
+/analysis/h1/set 10 512  0.5 512.5 none
+/analysis/h1/set 11 512  0.5 512.5 none
+/analysis/h1/set 12 512  0.5 512.5 none
+/analysis/h1/set 13 512  0.5 512.5 none
+/analysis/h1/set 14 512  0.5 512.5 none
+/analysis/h1/set 15 512  0.5 512.5 none
+/analysis/h1/set 16 512  0.5 512.5 none
+/analysis/h1/set 17 512  0.5 512.5 none
+/analysis/h1/set 18 512  0.5 512.5 none
+/analysis/h1/set 19 512  0.5 512.5 none
+/analysis/h1/set 20 512  0.5 512.5 none
+/analysis/h1/set 21 512  0.5 512.5 none
+/analysis/h1/set 22 512  0.5 512.5 none
+/analysis/h1/set 23 512  0.5 512.5 none
+/analysis/h1/set 24 512  0.5 512.5 none
+/analysis/h1/set 25 512  0.5 512.5 none
+/analysis/h1/set 26 512  0.5 512.5 none
+/analysis/h1/set 27 512  0.5 512.5 none
+/analysis/h1/set 28 512  0.5 512.5 none
+/analysis/h1/set 29 512  0.5 512.5 none
+/analysis/h2/setX 3 6240  0.5 6240.5 none
+/analysis/h2/setY 3 100 0. 2. MeV
+/analysis/h2/setX 4 20  0.5 20.5 none
+/analysis/h2/setY 4 1000 0. 20. MeV
+/analysis/h2/setX 1 6240  0.5 6240.5 none
+/analysis/h2/setY 1 100  0. 100. none
+/analysis/h2/setX 2 20  0.5 20.5 none
+/analysis/h2/setY 2 100  0. 100. none
+/analysis/h2/setX 5 512  0.5 512.5 none
+/analysis/h2/setY 5 20  0.5 20.5 none
+#
+/run/printProgress 10000
+#
+/run/beamOn 10000
+#/run/beamOn 10

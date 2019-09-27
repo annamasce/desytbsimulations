@@ -1,0 +1,20 @@
+#
+# Macro file for "amsEcal.cc" 
+# (can be run in batch, without graphic)
+#
+/control/verbose 2
+/run/verbose 2
+#
+/ams/phys/addPhysics  local
+/run/setCut 1 km
+#
+/run/initialize
+#
+/ams/gun/setDefault
+/gun/particle e-
+/gun/energy 2.5 GeV
+/ams/gun/beam 3 mm
+#
+/run/printProgress 1000
+#
+/run/beamOn 10000
