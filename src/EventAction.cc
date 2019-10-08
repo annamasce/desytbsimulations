@@ -204,7 +204,7 @@ void EventAction::EndOfEventAction(const G4Event*)
      analysisManager->FillH1(h,f+0.5,Evis);
      analysisManager->FillH2(3,iFiber+0.5,Evis);
      unsigned long long tot=(unsigned long long)(Evis*255/20.);
-     if(f>3 && f<516)AmpE.push_back(tot);
+     AmpE.push_back(tot);
 }
   std::map<G4int,G4double>::iterator hit;
   for (hit = HvisFiber.begin(); hit != HvisFiber.end(); hit++) {
@@ -217,19 +217,17 @@ void EventAction::EndOfEventAction(const G4Event*)
      analysisManager->FillH2(5,f+0.5,h-17,Hvis);
      analysisManager->FillH2(1,iFiber+0.5,Hvis);
 //     layers.push_back(h-17);
-     if(f>3 && f<516){
-     PlaneCodeE.push_back((h-18)%2);
+     PlaneCodeE.push_back((h-17)%2);
      //PlaneNumberE.push_back(h-17);
      PlaneNumberE.push_back((int)((h-18)/2)+1);
      Board_IPE.push_back(h-17);
      Board_IDE.push_back(h-17);
-     STiC_IDE.push_back((int)((f-4)/128)*2+((f-4)%2));
-     Ch_IDE.push_back((int)((f-4)/8));
-     Ch_PositionE.push_back(f-4);
+     STiC_IDE.push_back((int)((f)/128)*2+((f)%2));
+     Ch_IDE.push_back(((f-128*((int)(f/128)))-((f-128*((int)(f/128)))%2))/2);
+     Ch_PositionE.push_back(f);
      //Hit_TimeE.push_back(0.);
      //Fine_TimeE.push_back(0.);
      //Hit_RealTimeE.push_back();
-     }
      //analysisManager->FillNtupleDColumn(1, 0, h-17);
 }
 std::map<G4int,G4double>::iterator thit;
@@ -238,7 +236,6 @@ for (thit = Hittimes.begin(); thit != Hittimes.end(); thit++) {
   G4int iFiber = kFiber;
   G4double tim = thit->second;
   G4int f=(kFiber-1)%512;
-    if(f>3 && f<516){
         Hit_RealTimeE.push_back(tim);
         double timetmp=tim*0.68-(int)(tim*0.68);
         unsigned long long hittmp;
@@ -246,7 +243,6 @@ for (thit = Hittimes.begin(); thit != Hittimes.end(); thit++) {
         else hittmp= (unsigned long long)(tim*0.68)-1;
         Hit_TimeE.push_back(hittmp);
         Fine_TimeE.push_back((unsigned long long)((tim*0.68-hittmp)*32));
-    }
 }
      //analysisManager->FillNtupleDColumn(1, 0, layers);
      //analysisManager->AddNtupleRow();
@@ -259,7 +255,7 @@ for (thit = Hittimes.begin(); thit != Hittimes.end(); thit++) {
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-        
+ 
 #include <fstream>
 
 void EventAction::WriteFibers(const G4Event* evt)
