@@ -51,7 +51,7 @@ class EventAction : public G4UserEventAction
     void BeginOfEventAction(const G4Event*);
     void   EndOfEventAction(const G4Event*);
     
-    void SumDeStep(G4int, G4int,G4int, G4int, G4int, G4double,  G4bool, G4String, G4double);
+    void SumDeStep(G4int, G4int,G4int, G4int, G4int, G4double,  G4bool, G4String, G4double, G4double);
 	
 	void WriteFibers(const G4Event*);
 			         	    
@@ -81,9 +81,11 @@ class EventAction : public G4UserEventAction
 
     std::vector<double> trigtimes;
     std::vector<double> steptimes;
+    std::vector<double> steptracks;
     std::vector<double> Trig_RealTimeE;
     std::vector<double> Hit_RealTimeE; 
-	G4double EtotCalor;
+	std::vector<double> Track_IDE;
+    G4double EtotCalor;
 	G4double EvisCalor;
     G4double HvisSum;
     HistoManager*           fHistoManager; 	
@@ -92,6 +94,7 @@ class EventAction : public G4UserEventAction
     std::map<G4int, G4double> EvisLayerm;
     std::map<G4int, G4double> HvisLayerm;
     std::map<G4int, G4double> Hittimes;
+    std::map<G4int, G4double> Trkids;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

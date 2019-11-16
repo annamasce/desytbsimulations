@@ -75,12 +75,14 @@ void EventAction::BeginOfEventAction(const G4Event*)
   EvisLayerm.clear();
   HvisLayerm.clear();
   Hittimes.clear();
+  Trkids.clear();
 //layers.clear();
 TriggerIDE = 0;
 TriggerCounterE = 0;
 PlaneCodeE.clear();
 PlaneNumberE.clear();
 Board_IPE.clear(); 
+Track_IDE.clear();
 Board_IDE.clear(); 
 STiC_IDE.clear();  
 Ch_IDE.clear();    
@@ -92,12 +94,13 @@ Trig_TimeE.clear();
 Trig_RealTimeE.clear(); 
 Hit_RealTimeE.clear(); 
 steptimes.clear();
+steptracks.clear();
 trigtimes.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFiber, G4int iTrigger, G4double deStep, G4bool samefibre , G4String particle, G4double time)
+void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFiber, G4int iTrigger, G4double deStep, G4bool samefibre , G4String particle, G4double time, G4double trackid)
 {
   if(iTrigger>0){trigtimes.push_back(time);}
   if (iModule > 0) EtotCalor += deStep;
@@ -124,6 +127,7 @@ void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFi
     //EvisFiber[kFiber] += deStep;
     HvisSum+=deStep;
     steptimes.push_back(time);
+    steptracks.push_back(trackid);
     //HvisFiber[kFiber] +=1;
     //EvisFiber[kFiber] += deStep;
     if(!samefibre){
@@ -132,10 +136,13 @@ void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFi
         EvisFiber[kFiber] += HvisSum;
         EvisLayerm[kLayer] += HvisSum;
         HvisLayerm[kLayer] += 1.;
+        //Trkids[kFiber]=trackid;
         if(steptimes.size()>0)Hittimes[kFiber]=steptimes.at(0);
+        if(steptracks.size()>0)Trkids[kFiber]=steptracks.at(0);
         }
         HvisSum = 0.;
         steptimes.clear();
+        steptracks.clear();
         }
   }
   else{HvisSum = 0.;}
@@ -244,9 +251,18 @@ for (thit = Hittimes.begin(); thit != Hittimes.end(); thit++) {
         Hit_TimeE.push_back(hittmp);
         Fine_TimeE.push_back((unsigned long long)((tim*0.68-hittmp)*32));
 }
+std::map<G4int,G4double>::iterator trid;
+for (trid = Trkids.begin(); trid != Trkids.end(); trid++) {
+  G4int kFiber = trid->first;
+  G4int iFiber = kFiber;
+  G4double tid = trid->second;
+  G4int f=(kFiber-1)%512;
+        Track_IDE.push_back(tid);
+}
+//G4cout<<Hittimes.size()<<" "<<Trkids.size()<<G4endl;
      //analysisManager->FillNtupleDColumn(1, 0, layers);
      //analysisManager->AddNtupleRow();
-     fHistoManager->FillNtuple(TriggerIDE, TriggerCounterE, PlaneCodeE, PlaneNumberE, Board_IPE, Board_IDE, STiC_IDE, Ch_IDE, Ch_PositionE, AmpE, Hit_TimeE, Fine_TimeE, Trig_TimeE, Trig_RealTimeE, Hit_RealTimeE);
+     fHistoManager->FillNtuple(TriggerIDE, TriggerCounterE, PlaneCodeE, PlaneNumberE, Board_IPE, Board_IDE, STiC_IDE, Ch_IDE, Ch_PositionE, AmpE, Hit_TimeE, Fine_TimeE, Trig_TimeE, Trig_RealTimeE, Hit_RealTimeE, Track_IDE);
     
   //write fired fibers on a file
   //

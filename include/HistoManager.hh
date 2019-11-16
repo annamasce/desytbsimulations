@@ -48,7 +48,7 @@ class HistoManager
   ~HistoManager();
    void Book();
    void WriteTuple();
-   void FillNtuple(unsigned long long TriggerIDE, unsigned long long TriggerCounterE,  std::vector<uint32_t> PlaneCodeE, std::vector<uint32_t> PlaneNumberE, std::vector<uint32_t> Board_IPE, std::vector<uint32_t> Board_IDE, std::vector<uint32_t> STiC_IDE, std::vector<uint32_t> Ch_IDE, std::vector<uint32_t> Ch_PositionE, std::vector<unsigned long long> AmpE, std::vector<unsigned long long> Hit_TimeE, std::vector<unsigned long long> Fine_TimeE, std::vector<unsigned long long> Trig_TimeE, std::vector<double> Trig_RealTimeE, std::vector<double> Hit_RealTimeE); 
+   void FillNtuple(unsigned long long TriggerIDE, unsigned long long TriggerCounterE,  std::vector<uint32_t> PlaneCodeE, std::vector<uint32_t> PlaneNumberE, std::vector<uint32_t> Board_IPE, std::vector<uint32_t> Board_IDE, std::vector<uint32_t> STiC_IDE, std::vector<uint32_t> Ch_IDE, std::vector<uint32_t> Ch_PositionE, std::vector<unsigned long long> AmpE, std::vector<unsigned long long> Hit_TimeE, std::vector<unsigned long long> Fine_TimeE, std::vector<unsigned long long> Trig_TimeE, std::vector<double> Trig_RealTimeE, std::vector<double> Hit_RealTimeE, std::vector<double> Track_IDE); 
 
   private:
     TFile*   fRootfile;
@@ -68,7 +68,8 @@ class HistoManager
     std::vector<unsigned long long> Fine_Time;
     std::vector<unsigned long long> Trig_Time;
     std::vector<double> Trig_RealTime; 
-    std::vector<double> Hit_RealTime; 
+    std::vector<double> Hit_RealTime;
+    std::vector<double> Track_ID;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

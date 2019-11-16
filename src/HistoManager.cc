@@ -56,7 +56,7 @@ Fine_Time.clear();
 Trig_Time.clear();
 Trig_RealTime.clear(); 
 Hit_RealTime.clear(); 
-
+Track_ID.clear();
 
 Book();
 }
@@ -97,7 +97,7 @@ Fine_Time.clear();
 Trig_Time.clear();
 Trig_RealTime.clear(); 
 Hit_RealTime.clear(); 
-
+Track_ID.clear();
  // Define histograms start values
   const G4int kMaxHisto = 34;
   const G4String id[] = {"1", "2", "3" , "4", "5", "6", "7"," 8", "9",  "10", "11" , "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" , "24", "25", "26", "27", "28", "29", "1", "2", "3", "4", "5"};
@@ -172,12 +172,12 @@ fNtuple1 = new TTree("data", "data tree");
 
     fNtuple1->Branch("HitRealTime",&Hit_RealTime);
     fNtuple1->Branch("TriggerRealTime",&Trig_RealTime);
- 
+    fNtuple1->Branch("TrackID",&Track_ID);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void HistoManager::FillNtuple(unsigned long long TriggerIDE, unsigned long long TriggerCounterE, std::vector<uint32_t> PlaneCodeE,      std::vector<uint32_t> PlaneNumberE, std::vector<uint32_t> Board_IPE, std::vector<uint32_t> Board_IDE, std::vector<uint32_t> STiC_IDE, std::      vector<uint32_t> Ch_IDE, std::vector<uint32_t> Ch_PositionE, std::vector<unsigned long long> AmpE, std::vector<unsigned long long>               Hit_TimeE, std::vector<unsigned long long> Fine_TimeE, std::vector<unsigned long long> Trig_TimeE, std::vector<double> Trig_RealTimeE, std::     vector<double> Hit_RealTimeE)
+void HistoManager::FillNtuple(unsigned long long TriggerIDE, unsigned long long TriggerCounterE, std::vector<uint32_t> PlaneCodeE,      std::vector<uint32_t> PlaneNumberE, std::vector<uint32_t> Board_IPE, std::vector<uint32_t> Board_IDE, std::vector<uint32_t> STiC_IDE, std::      vector<uint32_t> Ch_IDE, std::vector<uint32_t> Ch_PositionE, std::vector<unsigned long long> AmpE, std::vector<unsigned long long>               Hit_TimeE, std::vector<unsigned long long> Fine_TimeE, std::vector<unsigned long long> Trig_TimeE, std::vector<double> Trig_RealTimeE, std::vector<double> Hit_RealTimeE, std::vector<double> Track_IDE)
 {
   TriggerID     = TriggerIDE;
   TriggerCounter= TriggerCounterE;
@@ -194,6 +194,7 @@ void HistoManager::FillNtuple(unsigned long long TriggerIDE, unsigned long long 
   Trig_Time     = Trig_TimeE;
   Trig_RealTime = Trig_RealTimeE;
   Hit_RealTime  = Hit_RealTimeE;
+  Track_ID = Track_IDE;
   if (fNtuple1) fNtuple1->Fill();
 }
 

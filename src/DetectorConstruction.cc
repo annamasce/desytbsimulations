@@ -140,11 +140,11 @@ void DetectorConstruction::DefineMaterials()
 
   //attribute materials
   //
-  //defaultMat     = Vacuum;  
-  defaultMat     = Air;
+  defaultMat     = Vacuum;  
+  //defaultMat     = Air;
   fiberMat       = Sci;
-  absorberMat    = Pb;
-  //absorberMat    = Vacuum;
+  //absorberMat    = Pb;
+  absorberMat    = Vacuum;
   moduleMat      = defaultMat;
   calorimeterMat = defaultMat;
   worldMat       = defaultMat;

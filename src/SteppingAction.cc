@@ -126,13 +126,19 @@ void SteppingAction::UserSteppingAction(const G4Step* step )
                                  iPlane2  = touch2->GetCopyNumber(2);
                                  iModule2 = touch2->GetCopyNumber(3);}
  G4double time=0;
- if(edep>0){time= step->GetPreStepPoint()->GetGlobalTime();}
+ G4double trackid=0;
+ if(edep>0){time= step->GetPreStepPoint()->GetGlobalTime();
+// G4cout<<"track "<<step->GetTrack()->GetTrackID()<<G4endl;
+ trackid=step->GetTrack()->GetTrackID();
+ }
  // sum edep
  //
  //G4cout<<"Module, Plane, Layer, Fibre "<<iModule<<" "<<iPlane<<" "<<iLayer<<" "<<iFiber<<G4endl;
  //G4cout<<"Module2, Plane2, Layer2, Fibre2 "<<iModule2<<" "<<iPlane2<<" "<<iLayer2<<" "<<iFiber2<<G4endl;
  if(iModule==iModule2 && iPlane==iPlane2 && iLayer ==iLayer2 && iFiber==iFiber2)samefibre=1;
- eventAct->SumDeStep(iModule, iPlane, iLayer, iFiber, iTrigger, edep, samefibre, particle,time);         
+ //else{samefibre=0; G4cout<<"track "<<step->GetTrack()->GetTrackID()<<G4endl;}
+ //G4double trackid=step->GetTrack()->GetTrackID();
+ eventAct->SumDeStep(iModule, iPlane, iLayer, iFiber, iTrigger, edep, samefibre, particle,time,trackid);         
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
