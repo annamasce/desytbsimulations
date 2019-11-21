@@ -51,7 +51,7 @@ class EventAction : public G4UserEventAction
     void BeginOfEventAction(const G4Event*);
     void   EndOfEventAction(const G4Event*);
     
-    void SumDeStep(G4int, G4int,G4int, G4int, G4int, G4double,  G4bool, G4String, G4double, G4double);
+    void SumDeStep(G4int, G4int,G4int, G4int, G4int, G4double,  G4bool, G4String, G4double, G4double, G4double, G4double, G4double, G4double, G4double, G4double, G4double, G4double, G4double);
 	
 	void WriteFibers(const G4Event*);
 			         	    
@@ -79,12 +79,34 @@ class EventAction : public G4UserEventAction
     std::vector<unsigned long long> Fine_TimeE;
     std::vector<unsigned long long> Trig_TimeE;
 
+    std::vector<std::string> stepparticleids;
+    std::vector<std::string> ParticleIDE;
+
     std::vector<double> trigtimes;
     std::vector<double> steptimes;
     std::vector<double> steptracks;
+    std::vector<double> stepmasses;
+    std::vector<double> steppxs;
+    std::vector<double> steppys;
+    std::vector<double> steppzs;
+    std::vector<double> steppts;
+    std::vector<double> stepthetas;
+    std::vector<double> stepphis;
+    std::vector<double> stepenergies;
+    std::vector<double> stepmomenta;
     std::vector<double> Trig_RealTimeE;
     std::vector<double> Hit_RealTimeE; 
 	std::vector<double> Track_IDE;
+	std::vector<double> MassE;
+	std::vector<double> PxE;
+	std::vector<double> PyE;
+	std::vector<double> PzE;
+	std::vector<double> PtE;
+	std::vector<double> ThetaE;
+	std::vector<double> PhiE;
+	std::vector<double> EnergyE;
+	std::vector<double> MomentumE;
+
     G4double EtotCalor;
 	G4double EvisCalor;
     G4double HvisSum;
@@ -95,6 +117,18 @@ class EventAction : public G4UserEventAction
     std::map<G4int, G4double> HvisLayerm;
     std::map<G4int, G4double> Hittimes;
     std::map<G4int, G4double> Trkids;
+    std::map<G4int, G4double> Masses;
+    std::map<G4int, G4double> Pxs;
+    std::map<G4int, G4double> Pys;
+    std::map<G4int, G4double> Pzs;
+    std::map<G4int, G4double> Pts;
+    std::map<G4int, G4double> Thetas;
+    std::map<G4int, G4double> Phis;
+    std::map<G4int, G4double> Energies;
+    std::map<G4int, G4double> Momenta;
+
+    std::map<G4int, G4String> Particleids;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -72,7 +72,8 @@ DetectorConstruction::DetectorConstruction()
   fiberLength         = 130.340*mm;	//662.175*mm
   planeThickness      =layerThickness*nbOfLayers;
   nbOfabsorbers       =2;
-  nbOfabsorberlayersIn =10;
+  //nbOfabsorberlayersIn =10;
+  nbOfabsorberlayersIn =0;
   nbOfabsorberlayersIn2 =0.;
   nbOfabsorberlayersOut =2;
   modulegap           =40.*mm;
@@ -140,8 +141,8 @@ void DetectorConstruction::DefineMaterials()
 
   //attribute materials
   //
-  defaultMat     = Vacuum;  
-  //defaultMat     = Air;
+  //defaultMat     = Vacuum;
+  defaultMat     = Air;
   fiberMat       = Sci;
   //absorberMat    = Pb;
   absorberMat    = Vacuum;

@@ -88,7 +88,22 @@ void SteppingAction::UserSteppingAction(const G4Step* step )
  G4Track* track = step->GetTrack();
  if (!track)return;
  if (track== NULL)return;
+ //KEY_HERE!
  G4String particle = track->GetDefinition()->GetParticleName();
+ const G4DynamicParticle* dynParticle = track -> GetDynamicParticle();
+ G4double mass = dynParticle -> GetMass();
+ G4ThreeVector momentum_vector = dynParticle -> GetMomentum();
+ G4double px = momentum_vector.x();
+ G4double py = momentum_vector.y();
+ G4double pz = momentum_vector.z();
+ G4double pt = py*py + pz*pz;
+ G4double energy = dynParticle -> GetTotalEnergy();
+ G4double momentum = dynParticle -> GetTotalMomentum();
+ G4double theta = atan(pt/px);
+ G4double phi = std::atan2(pz, py);
+
+
+ //G4cout << "dynParticle -> GetMass() ---> " << mass << G4endl;
 //G4cout<<"particle: "<<track->GetDefinition()->GetParticleName()<<G4endl;
  if (!lvol)return;
  else if(lvol== NULL)return;
@@ -138,7 +153,9 @@ void SteppingAction::UserSteppingAction(const G4Step* step )
  if(iModule==iModule2 && iPlane==iPlane2 && iLayer ==iLayer2 && iFiber==iFiber2)samefibre=1;
  //else{samefibre=0; G4cout<<"track "<<step->GetTrack()->GetTrackID()<<G4endl;}
  //G4double trackid=step->GetTrack()->GetTrackID();
- eventAct->SumDeStep(iModule, iPlane, iLayer, iFiber, iTrigger, edep, samefibre, particle,time,trackid);         
+
+ //KEY_HERE!
+ eventAct->SumDeStep(iModule, iPlane, iLayer, iFiber, iTrigger, edep, samefibre, particle,time,trackid, mass, px, py, pz, pt, theta, phi, energy, momentum);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

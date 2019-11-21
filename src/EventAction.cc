@@ -76,6 +76,16 @@ void EventAction::BeginOfEventAction(const G4Event*)
   HvisLayerm.clear();
   Hittimes.clear();
   Trkids.clear();
+  Particleids.clear();
+  Masses.clear();
+  Pxs.clear();
+  Pys.clear();
+  Pzs.clear();
+  Pts.clear();
+  Thetas.clear();
+  Phis.clear();
+  Energies.clear();
+  Momenta.clear();
 //layers.clear();
 TriggerIDE = 0;
 TriggerCounterE = 0;
@@ -92,15 +102,35 @@ Hit_TimeE.clear();
 Fine_TimeE.clear();
 Trig_TimeE.clear();
 Trig_RealTimeE.clear(); 
-Hit_RealTimeE.clear(); 
+Hit_RealTimeE.clear();
+ParticleIDE.clear();
+MassE.clear();
+PxE.clear();
+PyE.clear();
+PzE.clear();
+PtE.clear();
+ThetaE.clear();
+PhiE.clear();
+EnergyE.clear();
+MomentumE.clear();
 steptimes.clear();
 steptracks.clear();
+stepparticleids.clear();
+stepmasses.clear();
+steppxs.clear();
+steppys.clear();
+steppzs.clear();
+steppts.clear();
+stepthetas.clear();
+stepphis.clear();
+stepenergies.clear();
+stepmomenta.clear();
 trigtimes.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFiber, G4int iTrigger, G4double deStep, G4bool samefibre , G4String particle, G4double time, G4double trackid)
+void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFiber, G4int iTrigger, G4double deStep, G4bool samefibre , G4String particle, G4double time, G4double trackid, G4double mass, G4double px, G4double py, G4double pz, G4double pt, G4double theta, G4double phi, G4double energy, G4double momentum)
 {
   if(iTrigger>0){trigtimes.push_back(time);}
   if (iModule > 0) EtotCalor += deStep;
@@ -114,7 +144,8 @@ void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFi
 	//G4cout<<"kLayer "<<kLayer<<G4endl;
     EtotLayer[kLayer] += deStep;
   }
-  
+
+  //KEY_HERE!
   if (iFiber > 0) {
     //G4cout<<"Fibre >0"<<G4endl;
 	EvisLayer[kLayer] += deStep;
@@ -128,6 +159,16 @@ void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFi
     HvisSum+=deStep;
     steptimes.push_back(time);
     steptracks.push_back(trackid);
+    stepparticleids.push_back(particle);
+    stepmasses.push_back(mass);
+    steppxs.push_back(px);
+    steppys.push_back(py);
+    steppzs.push_back(pz);
+    steppts.push_back(pt);
+    stepthetas.push_back(theta);
+    stepphis.push_back(phi);
+    stepenergies.push_back(energy);
+    stepmomenta.push_back(momentum);
     //HvisFiber[kFiber] +=1;
     //EvisFiber[kFiber] += deStep;
     if(!samefibre){
@@ -137,12 +178,35 @@ void EventAction::SumDeStep(G4int iModule, G4int iPlane, G4int iLayer, G4int iFi
         EvisLayerm[kLayer] += HvisSum;
         HvisLayerm[kLayer] += 1.;
         //Trkids[kFiber]=trackid;
-        if(steptimes.size()>0)Hittimes[kFiber]=steptimes.at(0);
-        if(steptracks.size()>0)Trkids[kFiber]=steptracks.at(0);
+        if(steptimes.size()>0) Hittimes[kFiber]=steptimes.at(0);
+        if(steptracks.size()>0) Trkids[kFiber]=steptracks.at(0);
+        if(stepparticleids.size()>0){
+            Particleids[kFiber]=stepparticleids.at(0);
+            G4cout << "stepparticleids.at(0) ----> " << stepparticleids.at(0) << G4endl;
+        }
+        if(stepmasses.size()>0) Masses[kFiber]=stepmasses.at(0);
+        if(steppxs.size()>0) Pxs[kFiber]=steppxs.at(0);
+        if(steppys.size()>0) Pys[kFiber]=steppys.at(0);
+        if(steppzs.size()>0) Pzs[kFiber]=steppzs.at(0);
+        if(steppts.size()>0) Pts[kFiber]=steppts.at(0);
+        if(stepthetas.size()>0) Thetas[kFiber]=stepthetas.at(0);
+        if(stepphis.size()>0) Phis[kFiber]=stepphis.at(0);
+        if(stepenergies.size()>0) Energies[kFiber]=stepenergies.at(0);
+        if(stepmomenta.size()>0) Momenta[kFiber]=stepmomenta.at(0);
         }
         HvisSum = 0.;
         steptimes.clear();
         steptracks.clear();
+        stepparticleids.clear();
+        stepmasses.clear();
+        steppxs.clear();
+        steppys.clear();
+        steppzs.clear();
+        steppts.clear();
+        stepthetas.clear();
+        stepphis.clear();
+        stepenergies.clear();
+        stepmomenta.clear();
         }
   }
   else{HvisSum = 0.;}
@@ -239,10 +303,10 @@ void EventAction::EndOfEventAction(const G4Event*)
 }
 std::map<G4int,G4double>::iterator thit;
 for (thit = Hittimes.begin(); thit != Hittimes.end(); thit++) {
-  G4int kFiber = thit->first;
-  G4int iFiber = kFiber;
+  //G4int kFiber = thit->first;
+  //G4int iFiber = kFiber;
   G4double tim = thit->second;
-  G4int f=(kFiber-1)%512;
+  //G4int f=(kFiber-1)%512;
         Hit_RealTimeE.push_back(tim);
         double timetmp=tim*0.68-(int)(tim*0.68);
         unsigned long long hittmp;
@@ -253,16 +317,88 @@ for (thit = Hittimes.begin(); thit != Hittimes.end(); thit++) {
 }
 std::map<G4int,G4double>::iterator trid;
 for (trid = Trkids.begin(); trid != Trkids.end(); trid++) {
-  G4int kFiber = trid->first;
-  G4int iFiber = kFiber;
+  //G4int kFiber = trid->first;
   G4double tid = trid->second;
-  G4int f=(kFiber-1)%512;
-        Track_IDE.push_back(tid);
+  Track_IDE.push_back(tid);
 }
+
+std::map<G4int,G4double>::iterator mhit;
+for (mhit = Masses.begin(); mhit != Masses.end(); mhit++) {
+  //G4int kFiber = mhit->first;
+  G4double hitmass = mhit->second;
+  MassE.push_back(hitmass);
+}
+
+std::map<G4int,G4String>::iterator parthit;
+for (parthit = Particleids.begin(); parthit != Particleids.end(); parthit++) {
+  //G4int kFiber = parthit->first;
+  G4String hitparticle = parthit->second;
+  G4cout << "hitparticle ----> " << hitparticle << G4endl;
+  ParticleIDE.push_back(hitparticle);
+}
+
+std::map<G4int,G4double>::iterator pxhit;
+for (pxhit = Pxs.begin(); pxhit != Pxs.end(); pxhit++) {
+  //G4int kFiber = pxhit->first;
+  G4double hitpx = pxhit->second;
+  PxE.push_back(hitpx);
+}
+
+std::map<G4int,G4double>::iterator pyhit;
+for (pyhit = Pys.begin(); pyhit != Pys.end(); pyhit++) {
+  //G4int kFiber = pyhit->first;
+  G4double hitpy = pyhit->second;
+  PyE.push_back(hitpy);
+}
+
+std::map<G4int,G4double>::iterator pzhit;
+for (pzhit = Pzs.begin(); pzhit != Pzs.end(); pzhit++) {
+  //G4int kFiber = pzhit->first;
+  G4double hitpz = pzhit->second;
+  PzE.push_back(hitpz);
+}
+
+std::map<G4int,G4double>::iterator pthit;
+for (pthit = Pts.begin(); pthit != Pts.end(); pthit++) {
+  //G4int kFiber = pthit->first;
+  G4double hitpt = pthit->second;
+  PtE.push_back(hitpt);
+}
+
+std::map<G4int,G4double>::iterator thetahit;
+for (thetahit = Thetas.begin(); thetahit != Thetas.end(); thetahit++) {
+  //G4int kFiber = thetahit->first;
+  G4double hittheta = thetahit->second;
+  ThetaE.push_back(hittheta);
+}
+
+std::map<G4int,G4double>::iterator phihit;
+for (phihit = Phis.begin(); phihit != Phis.end(); phihit++) {
+  //G4int kFiber = phihit->first;
+  G4double hitphi = phihit->second;
+  PhiE.push_back(hitphi);
+}
+
+std::map<G4int,G4double>::iterator enhit;
+for (enhit = Energies.begin(); enhit != Energies.end(); enhit++) {
+  //G4int kFiber = enhit->first;
+  G4double hitenergy = enhit->second;
+  EnergyE.push_back(hitenergy);
+}
+
+std::map<G4int,G4double>::iterator momhit;
+for (momhit = Momenta.begin(); momhit != Momenta.end(); momhit++) {
+  //G4int kFiber = momhit->first;
+  G4double hitmomentum = momhit->second;
+  MomentumE.push_back(hitmomentum);
+}
+
 //G4cout<<Hittimes.size()<<" "<<Trkids.size()<<G4endl;
      //analysisManager->FillNtupleDColumn(1, 0, layers);
      //analysisManager->AddNtupleRow();
-     fHistoManager->FillNtuple(TriggerIDE, TriggerCounterE, PlaneCodeE, PlaneNumberE, Board_IPE, Board_IDE, STiC_IDE, Ch_IDE, Ch_PositionE, AmpE, Hit_TimeE, Fine_TimeE, Trig_TimeE, Trig_RealTimeE, Hit_RealTimeE, Track_IDE);
+
+     //KEY_HERE!
+     fHistoManager->FillNtuple(TriggerIDE, TriggerCounterE, PlaneCodeE, PlaneNumberE, Board_IPE, Board_IDE, STiC_IDE, Ch_IDE, Ch_PositionE, AmpE, Hit_TimeE, Fine_TimeE, Trig_TimeE, Trig_RealTimeE, Hit_RealTimeE, Track_IDE, ParticleIDE, MassE, PxE, PyE, PzE, PtE, ThetaE, PhiE, EnergyE, MomentumE);
     
   //write fired fibers on a file
   //

@@ -57,6 +57,17 @@ Trig_Time.clear();
 Trig_RealTime.clear(); 
 Hit_RealTime.clear(); 
 Track_ID.clear();
+Mass.clear();
+ParticleID.clear();
+Px.clear();
+Py.clear();
+Pz.clear();
+Pt.clear();
+Theta.clear();
+Phi.clear();
+Energy.clear();
+Momentum.clear();
+
 
 Book();
 }
@@ -98,6 +109,16 @@ Trig_Time.clear();
 Trig_RealTime.clear(); 
 Hit_RealTime.clear(); 
 Track_ID.clear();
+Mass.clear();
+ParticleID.clear();
+Px.clear();
+Py.clear();
+Pz.clear();
+Pt.clear();
+Theta.clear();
+Phi.clear();
+Energy.clear();
+Momentum.clear();
  // Define histograms start values
   const G4int kMaxHisto = 34;
   const G4String id[] = {"1", "2", "3" , "4", "5", "6", "7"," 8", "9",  "10", "11" , "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" , "24", "25", "26", "27", "28", "29", "1", "2", "3", "4", "5"};
@@ -173,11 +194,21 @@ fNtuple1 = new TTree("data", "data tree");
     fNtuple1->Branch("HitRealTime",&Hit_RealTime);
     fNtuple1->Branch("TriggerRealTime",&Trig_RealTime);
     fNtuple1->Branch("TrackID",&Track_ID);
+    fNtuple1->Branch("Mass",&Mass);
+    fNtuple1->Branch("ParticleID",&ParticleID);
+    fNtuple1->Branch("Px",&Px);
+    fNtuple1->Branch("Py",&Py);
+    fNtuple1->Branch("Pz",&Pz);
+    fNtuple1->Branch("Pt",&Pt);
+    fNtuple1->Branch("Theta",&Theta);
+    fNtuple1->Branch("Phi",&Phi);
+    fNtuple1->Branch("Energy",&Energy);
+    fNtuple1->Branch("Momentum",&Momentum);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void HistoManager::FillNtuple(unsigned long long TriggerIDE, unsigned long long TriggerCounterE, std::vector<uint32_t> PlaneCodeE,      std::vector<uint32_t> PlaneNumberE, std::vector<uint32_t> Board_IPE, std::vector<uint32_t> Board_IDE, std::vector<uint32_t> STiC_IDE, std::      vector<uint32_t> Ch_IDE, std::vector<uint32_t> Ch_PositionE, std::vector<unsigned long long> AmpE, std::vector<unsigned long long>               Hit_TimeE, std::vector<unsigned long long> Fine_TimeE, std::vector<unsigned long long> Trig_TimeE, std::vector<double> Trig_RealTimeE, std::vector<double> Hit_RealTimeE, std::vector<double> Track_IDE)
+void HistoManager::FillNtuple(unsigned long long TriggerIDE, unsigned long long TriggerCounterE, std::vector<uint32_t> PlaneCodeE,      std::vector<uint32_t> PlaneNumberE, std::vector<uint32_t> Board_IPE, std::vector<uint32_t> Board_IDE, std::vector<uint32_t> STiC_IDE, std::vector<uint32_t> Ch_IDE, std::vector<uint32_t> Ch_PositionE, std::vector<unsigned long long> AmpE, std::vector<unsigned long long> Hit_TimeE, std::vector<unsigned long long> Fine_TimeE, std::vector<unsigned long long> Trig_TimeE, std::vector<double> Trig_RealTimeE, std::vector<double> Hit_RealTimeE, std::vector<double> Track_IDE, std::vector<std::string> ParticleIDE, std::vector<double> MassE, std::vector<double> PxE, std::vector<double> PyE, std::vector<double> PzE, std::vector<double> PtE, std::vector<double> ThetaE, std::vector<double> PhiE, std::vector<double> EnergyE, std::vector<double> MomentumE )
 {
   TriggerID     = TriggerIDE;
   TriggerCounter= TriggerCounterE;
@@ -195,6 +226,17 @@ void HistoManager::FillNtuple(unsigned long long TriggerIDE, unsigned long long 
   Trig_RealTime = Trig_RealTimeE;
   Hit_RealTime  = Hit_RealTimeE;
   Track_ID = Track_IDE;
+  Mass = MassE;
+  ParticleID = ParticleIDE; //G4cout << "ParticleID.at(0) ----> " << ParticleID.at(0) << G4endl;
+  Px = PxE;
+  Py = PyE;
+  Pz = PzE;
+  Pt = PtE;
+  Theta = ThetaE;
+  Phi = PhiE;
+  Energy = EnergyE;
+  Momentum = MomentumE;
+
   if (fNtuple1) fNtuple1->Fill();
 }
 
